@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Muslim Prayers</string>
+    <string name="application_icon_text">Application Icon</string>
+    <string name="patientez_message_text">Hang on please !</string>
+    <string name="reinitialiser_text">Reset</string>
+    <string name="retour_text">Back</string>
+</resources>

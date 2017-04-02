@@ -43,26 +43,26 @@ public class PrayTime {
     // ------------------------------------------------------------
     // Calculation Methods
     int Jafari; // Ithna Ashari
-    private int Karachi; // University of Islamic Sciences, Karachi
-    private int ISNA; // Islamic Society of North America (ISNA)
+    int Karachi; // University of Islamic Sciences, Karachi
+    int ISNA; // Islamic Society of North America (ISNA)
     int MWL; // Muslim World League (MWL)
     int Makkah; // Umm al-Qura, Makkah
-    private int Egypt; // Egyptian General Authority of Survey
-    private int Custom; // Custom Setting
-    private int Tehran; // Institute of Geophysics, University of Tehran
+    int Egypt; // Egyptian General Authority of Survey
+    int Custom; // Custom Setting
+    int Tehran; // Institute of Geophysics, University of Tehran
     // Juristic Methods
     int Shafii; // Shafii (standard)
-    private int Hanafi; // Hanafi
+    int Hanafi; // Hanafi
     // Adjusting Methods for Higher Latitudes
     int None; // No adjustment
-    private int MidNight; // middle of night
-    private int OneSeventh; // 1/7th of night
+    int MidNight; // middle of night
+    int OneSeventh; // 1/7th of night
     int AngleBased; // angle/60th of night
     // Time Formats
-    private int Time24; // 24-hour format
+    int Time24; // 24-hour format
     int Time12; // 12-hour format
-    private int Time12NS; // 12-hour format with no suffix
-    private int Floating; // floating point number
+    int Time12NS; // 12-hour format with no suffix
+    int Floating; // floating point number
     // Time Names
     private ArrayList<String> timeNames;
     private String InvalidTime; // The string used for invalid times
