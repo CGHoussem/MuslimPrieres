@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Muslum Prieres</string>
+    <string name="tasbih_text">Tasbih</string>
+    <string name="retour_text">Retour</string>
+    <string name="tasbih_count_init_text">0/33</string>
+    <string name="fajr_text">Fajr</string>
+    <string name="shurooq_text">Shurooq</string>
+    <string name="dhuhur_text">Dhuhur</string>
+    <string name="asr_text">Asr</string>
+    <string name="maghrib_text">Maghrib</string>
+    <string name="isha_text">Isha</string>
+    <string name="application_icon_text">Application Icon</string>
+    <string name="patientez_message_text">Patientez s\'il vous plaît !</string>
+</resources>
