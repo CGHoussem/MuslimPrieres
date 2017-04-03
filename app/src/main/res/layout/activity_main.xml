@@ -8,26 +8,26 @@
     tools:context="com.hrcompany.muslumprieres.MainActivity">
 
     <android.support.design.widget.CoordinatorLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/headerImageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/mosque_1" />
+        <ImageView
+            android:id="@+id/headerImageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/mosque_1" />
 
-                <TextClock
-                    android:id="@+id/txtClock"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textColor="@android:color/white"
-                    android:textSize="75sp"
-                    android:textStyle="bold" />
+        <TextClock
+            android:id="@+id/txtClock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="75sp"
+            android:textStyle="bold" />
 
-            </android.support.design.widget.CoordinatorLayout>
+    </android.support.design.widget.CoordinatorLayout>
     <TextView
                 android:id="@+id/txtCurrentDate"
                 android:layout_width="match_parent"
@@ -47,4 +47,5 @@
         android:layout_height="wrap_content"
         android:text="@string/tasbih_text"
         android:onClick="gotoTasbihActivity" />
+
 </LinearLayout>

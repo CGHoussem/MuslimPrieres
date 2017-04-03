@@ -28,7 +28,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.TimeZone;
 
-public class PrayTime {
+class PrayTime {
 
     // ---------------------- Global Variables --------------------
     private int calcMethod; // caculation method
@@ -82,9 +82,8 @@ public class PrayTime {
     private double[] prayerTimesCurrent;
     private int[] offsets;
 
-    public PrayTime() {
+    PrayTime() {
         // Initialize vars
-
         this.setCalcMethod(0);
         this.setAsrJuristic(0);
         this.setDhuhrMinutes(0);
@@ -192,9 +191,7 @@ public class PrayTime {
     // ---------------------- Trigonometric Functions -----------------------
     // range reduce angle in degrees.
     private double fixangle(double a) {
-
         a = a - (360 * (Math.floor(a / 360.0)));
-
         a = a < 0 ? (a + 360) : a;
 
         return a;

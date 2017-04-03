@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class PrayerAdapter extends ArrayAdapter<Prayer> {
-    public PrayerAdapter(@NonNull Context context, @NonNull List<Prayer> objects) {
+class PrayerAdapter extends ArrayAdapter<Prayer> {
+    PrayerAdapter(@NonNull Context context, @NonNull List<Prayer> objects) {
         super(context, 0, objects);
     }
 

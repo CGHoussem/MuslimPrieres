@@ -8,9 +8,10 @@ import android.widget.TextView;
 
 public class TasbihActivity extends AppCompatActivity {
 
+    private static int total = 0;
+    private static int count = 0;
     private TextView countTextView;
     private TextView totalTextView;
-    private static int total = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,38 +20,36 @@ public class TasbihActivity extends AppCompatActivity {
 
         countTextView = (TextView) findViewById(R.id.countTextView);
         totalTextView = (TextView) findViewById(R.id.totalTextView);
+
+        countTextView.setText(count + "/33");
+        totalTextView.setText("Total: " + total);
     }
 
     public void addCount(View view) {
-        String ch = countTextView.getText().toString();
-        int count = Integer.parseInt(ch.substring(0, ch.indexOf("/")));
-        StringBuilder resultat = new StringBuilder();
-        if (count == 33) {
-            count = 1;
-            resultat.append(count).append("/33");
-        } else {
-            count++;
-            resultat.append(count).append("/33");
-        }
-        countTextView.setText(resultat.toString());
-
+        count++;
         total++;
+
+        if (count > 33) {
+            count = 1;
+        }
+
+        countTextView.setText(count + "/33");
         totalTextView.setText("Total: " + total);
 
-        // vibrate
+        // vibrate for 50 ms
         Vibrator v = (Vibrator) getApplicationContext().getSystemService(VIBRATOR_SERVICE);
         v.vibrate(50);
     }
 
     public void resetCount(View view) {
+        count = 0;
         total = 0;
-        countTextView.setText("0/33");
-        totalTextView.setText("Total: 0");
+        countTextView.setText(count + "/33");
+        totalTextView.setText("Total: " + total);
     }
 
     public void closeActivity(View view) {
         finish();
     }
-
 
 }

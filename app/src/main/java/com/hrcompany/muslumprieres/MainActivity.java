@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -46,34 +47,45 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*double latitude = 36.806495; // Latitude of Tunis, Tunisia
+        double longitude = 10.181532; // Longitude of Tunis, Tunisia*/
+
+        GPSTracker gps = new GPSTracker(this);
+        if (gps.canGetLocation()){
+            double latitude = gps.getLatitude();
+            double longitude = gps.getLongitude();
+            double timezone = (Calendar.getInstance().getTimeZone().getOffset(Calendar.getInstance().getTimeInMillis())) / (1000 * 60 * 60);
+            PrayTime prayers = new PrayTime();
+
+            prayers.setTimeFormat(prayers.Time12);
+            prayers.setCalcMethod(prayers.MWL);
+            prayers.setAsrJuristic(prayers.Shafii);
+            prayers.setAdjustHighLats(prayers.None);
+            int[] offsets = {0, 0, 0, 0, 0, 0, 0}; // {Fajr,Sunrise,Dhuhr,Asr, Sunset,Maghrib,Isha}
+            prayers.tune(offsets);
+
+            Date now = new Date();
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(now);
+
+            ArrayList<String> prayerTimes = prayers.getPrayerTimes(cal, latitude, longitude, timezone);
+            ArrayList<String> prayerNames = prayers.getTimeNames();
+
+            for (int i = 0; i < prayerTimes.size(); i++) {
+                arrayOfPrayers.add(new Prayer(prayerNames.get(i), prayerTimes.get(i)));
+            }
+            gps.stopUsingGPS();
+        } else {
+            gps.showSettingsAlert();
+        }
+
+        // Affichage de la date d'aujourd'hui
         TextView txtCurrentDate = (TextView) findViewById(R.id.txtCurrentDate);
         long currentTimeMillis = System.currentTimeMillis();
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, d MMMM");
         txtCurrentDate.setText(dateFormat.format(currentTimeMillis));
 
-        double latitude = 36.806495; // latitude of Tunis, Tunisia
-        double longitude = 10.181532; // longitude of Tunis, Tunisia
-        double timezone = (Calendar.getInstance().getTimeZone().getOffset(Calendar.getInstance().getTimeInMillis())) / (1000 * 60 * 60);
-        PrayTime prayers = new PrayTime();
-
-        prayers.setTimeFormat(prayers.Time12);
-        prayers.setCalcMethod(prayers.MWL);
-        prayers.setAsrJuristic(prayers.Shafii);
-        prayers.setAdjustHighLats(prayers.None);
-        int[] offsets = {0, 0, 0, 0, 0, 0, 0}; // {Fajr,Sunrise,Dhuhr,Asr,Sunset,Maghrib,Isha}
-        prayers.tune(offsets);
-
-        Date now = new Date();
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(now);
-
-        ArrayList<String> prayerTimes = prayers.getPrayerTimes(cal, latitude, longitude, timezone);
-        ArrayList<String> prayerNames = prayers.getTimeNames();
-
-        for (int i = 0; i < prayerTimes.size(); i++) {
-            arrayOfPrayers.add(new Prayer(prayerNames.get(i), prayerTimes.get(i)));
-        }
-
+        // Affichage de la liste des priéres
         PrayerAdapter adapter = new PrayerAdapter(this, arrayOfPrayers);
         ListView listPrayers = (ListView) findViewById(R.id.listPrayers);
         listPrayers.setAdapter(adapter);
