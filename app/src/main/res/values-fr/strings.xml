@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="consulter_les_prieres">Consulter les heures de prières</string>
+    <string name="temps_pour_priere_text">Temps pour la prière de</string>
+    <string name="a_text">à</string>
+</resources>

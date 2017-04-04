@@ -1,52 +1,52 @@
 package com.hrcompany.muslumprieres;
 
-import android.Manifest;
-import android.app.ProgressDialog;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationManager;
-import android.location.LocationProvider;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.webkit.WebView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextClock;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity {
 
     private ArrayList<Prayer> arrayOfPrayers = new ArrayList<Prayer>();
+    private TextClock txtClock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        txtClock = (TextClock) findViewById(R.id.txtClock);
+
+        ShowDate();
+        calculateAndShowTimes();
+        NotifyInTimes();
+    }
+
+    public void gotoTasbihActivity(View view) {
+        Intent intent = new Intent(this, TasbihActivity.class);
+        startActivity(intent);
+    }
+
+    private void ShowDate(){
+        // Affichage de la date d'aujourd'hui
+        TextView txtCurrentDate = (TextView) findViewById(R.id.txtCurrentDate);
+        long currentTimeMillis = System.currentTimeMillis();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, d MMMM");
+        txtCurrentDate.setText(dateFormat.format(currentTimeMillis));
+    }
+    private void calculateAndShowTimes(){
         /*double latitude = 36.806495; // Latitude of Tunis, Tunisia
         double longitude = 10.181532; // Longitude of Tunis, Tunisia*/
 
@@ -57,7 +57,11 @@ public class MainActivity extends AppCompatActivity {
             double timezone = (Calendar.getInstance().getTimeZone().getOffset(Calendar.getInstance().getTimeInMillis())) / (1000 * 60 * 60);
             PrayTime prayers = new PrayTime();
 
-            prayers.setTimeFormat(prayers.Time12);
+            // Check Device Time Format
+            if (txtClock.is24HourModeEnabled())
+                prayers.setTimeFormat(prayers.Time24);
+            else
+                prayers.setTimeFormat(prayers.Time12);
             prayers.setCalcMethod(prayers.MWL);
             prayers.setAsrJuristic(prayers.Shafii);
             prayers.setAdjustHighLats(prayers.None);
@@ -79,21 +83,46 @@ public class MainActivity extends AppCompatActivity {
             gps.showSettingsAlert();
         }
 
-        // Affichage de la date d'aujourd'hui
-        TextView txtCurrentDate = (TextView) findViewById(R.id.txtCurrentDate);
-        long currentTimeMillis = System.currentTimeMillis();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, d MMMM");
-        txtCurrentDate.setText(dateFormat.format(currentTimeMillis));
-
         // Affichage de la liste des priéres
         PrayerAdapter adapter = new PrayerAdapter(this, arrayOfPrayers);
         ListView listPrayers = (ListView) findViewById(R.id.listPrayers);
         listPrayers.setAdapter(adapter);
     }
+    private void NotifyInTimes() {
+        SetAthan(arrayOfPrayers.get(0)); // Fajr Alarm
+        SetAthan(arrayOfPrayers.get(2)); // Dhuhur Alarm
+        SetAthan(arrayOfPrayers.get(3)); // Asr Alarm
+        SetAthan(arrayOfPrayers.get(5)); // Maghrib Alarm
+        SetAthan(arrayOfPrayers.get(6)); // Isha Alarm
+    }
+    private void SetAthan(Prayer p){
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-    public void gotoTasbihActivity(View view) {
-        Intent intent = new Intent(this, TasbihActivity.class);
-        startActivity(intent);
+        String time = p.getPrayerTime();
+        int hour = Integer.parseInt(time.substring(0, time.indexOf(":")));
+        int minute;
+        if (time.contains("am") || time.contains("pm"))
+            minute = Integer.parseInt(time.substring(time.indexOf(":") + 1, time.indexOf(" ")));
+        else
+            minute = Integer.parseInt(time.substring(time.indexOf(":") + 1));
+
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.putExtra("SALAT_NAME", p.getPrayerName());
+        intent.putExtra("SALAT_TIME", p.getPrayerTime());
+
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+
+        TimeZone currentTimeZone = TimeZone.getDefault();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeZone(currentTimeZone);
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+
+        if (calendar.getTimeInMillis() < Calendar.getInstance().getTimeInMillis())
+            calendar.add(Calendar.HOUR_OF_DAY, 24);
+
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmIntent);
     }
 
 }
