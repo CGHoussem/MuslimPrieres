@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_item_tasbih"
+        android:icon="@drawable/tasbih"
+        android:title="@string/tasbih_text"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="100"/>
+    <item
+        android:id="@+id/menu_item_qibla"
+        android:icon="@android:drawable/ic_menu_compass"
+        android:title="@string/qibla"
+        app:showAsAction="ifRoom"
+        android:orderInCategory="100"/>
+    <item
+        android:id="@+id/menu_item_settings"
+        android:icon="@drawable/ic_settings_black_48dp"
+        android:title="@string/settings"
+        app:showAsAction="never"
+        android:orderInCategory="101"/>
+
+</menu>

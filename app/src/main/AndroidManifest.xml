@@ -3,9 +3,7 @@
     package="com.hrcompany.muslumprieres">
 
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -21,10 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TasbihActivity" />
+        <activity android:name=".TasbihActivity"/>
+        <activity android:name=".AthanPrayerActivity"/>
 
-        <receiver android:name=".AlarmReceiver"
-            android:process=":remote" />
+        <receiver android:name=".AlarmReceiver" />
 
     </application>
 

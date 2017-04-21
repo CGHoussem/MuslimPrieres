@@ -10,4 +10,11 @@
     <string name="gps_settings">GPS settings</string>
     <string name="settings">Settings</string>
     <string name="cancel">Cancel</string>
+    <string name="qibla">Qibla</string>
+    <string name="a_text">to</string>
+    <string name="temps_pour_priere_text">"Time for prayer "</string>
+    <string name="consulter_les_prieres">View prayer times</string>
+    <string name="application_icon_description">Application Icon</string>
+    <string name="feedback">Send Feedback</string>
+    <string name="sunrise_text">Sunrise</string>
 </resources>

@@ -21,21 +21,16 @@ import android.widget.Toast;
 
 class GPSTracker extends Service implements LocationListener {
 
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 metres
+    private static final long MIN_TIME_BW_UPDATES = 1000 * 60; // 1 minute
     private final Context myContext;
-
+    protected LocationManager locationManager;
     boolean isGPSEnabled = false;
     boolean isNetworkEnabled = false;
     boolean canGetLocation = false;
-
     Location location;
     double latitude;
     double longitude;
-
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 metres
-
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
-
-    protected LocationManager locationManager;
 
     GPSTracker(Context myContext) {
         this.myContext = myContext;
@@ -66,7 +61,6 @@ class GPSTracker extends Service implements LocationListener {
                                 LocationManager.NETWORK_PROVIDER,
                                 MIN_TIME_BW_UPDATES,
                                 MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                        Log.d("Network", "Network");
                         if (locationManager != null) {
                             location = locationManager
                                     .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
@@ -75,7 +69,7 @@ class GPSTracker extends Service implements LocationListener {
                                 longitude = location.getLongitude();
                             }
                         }
-                    } catch (SecurityException e){
+                    } catch (SecurityException e) {
                         Toast.makeText(myContext, R.string.no_gps_access_message, Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -96,7 +90,7 @@ class GPSTracker extends Service implements LocationListener {
                                     longitude = location.getLongitude();
                                 }
                             }
-                        } catch (SecurityException e){
+                        } catch (SecurityException e) {
                             Toast.makeText(myContext, R.string.no_gps_access_message, Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -110,25 +104,25 @@ class GPSTracker extends Service implements LocationListener {
         return location;
     }
 
-    public double getLatitude(){
+    public double getLatitude() {
         if (location != null)
             latitude = location.getLatitude();
 
         return latitude;
     }
 
-    public double getLongitude(){
+    public double getLongitude() {
         if (location != null)
             longitude = location.getLongitude();
 
         return longitude;
     }
 
-    public boolean canGetLocation(){
+    public boolean canGetLocation() {
         return this.canGetLocation;
     }
 
-    public void showSettingsAlert(){
+    public void showSettingsAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(myContext);
 
         // Setting Dialog Title
@@ -142,7 +136,7 @@ class GPSTracker extends Service implements LocationListener {
 
         // On pressing Settings button
         alertDialog.setPositiveButton(R.string.settings, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog,int which) {
+            public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 myContext.startActivity(intent);
             }
@@ -159,8 +153,8 @@ class GPSTracker extends Service implements LocationListener {
         alertDialog.show();
     }
 
-    public void stopUsingGPS(){
-        if(locationManager != null){
+    public void stopUsingGPS() {
+        if (locationManager != null) {
             locationManager.removeUpdates(GPSTracker.this);
         }
     }

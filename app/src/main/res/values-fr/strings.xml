@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="consulter_les_prieres">Consulter les heures de prières</string>
-    <string name="temps_pour_priere_text">Temps pour la prière de</string>
+    <string name="temps_pour_priere_text">\"Temps pour la prière de \"</string>
     <string name="a_text">à</string>
+    <string name="qibla">Qibla</string>
+    <string name="cancel">Annuler</string>
+    <string name="application_icon_text">Icone d\'application</string>
+    <string name="gps_not_enabled_message">Le GPS n\'est pas activé. Voulez-vous aller au menu des paramètres?</string>
+    <string name="gps_settings">Paramètres de GPS</string>
+    <string name="no_gps_access_message">Il n\'y a pas d\'accès à votre GPS!</string>
+    <string name="patientez_message_text">Patientez s\'il vous plaît !</string>
+    <string name="reinitialiser_text">Réinitialiser</string>
+    <string name="retour_text">Retour</string>
+    <string name="settings">Paramètres</string>
+    <string name="app_name">Prières musulmanes</string>
 </resources>
